@@ -1,0 +1,10 @@
+{
+  "project": {
+    "platform": "drupal",
+    "name": "emulsify",
+    "machineName": "emulsify"
+  },
+  "starter": {
+    "repository": "https://github.com/emulsify-ds/emulsify-drupal-starter.git"
+  }
+}
