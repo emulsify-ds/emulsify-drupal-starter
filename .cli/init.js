@@ -140,6 +140,14 @@ const main = () => {
       from: '../emulsify.libraries.yml',
       to: `../${machineName}.libraries.yml`,
     },
+    {
+      from: '../config/install/emulsify.settings.yml',
+      to: `../config/install/${machineName}.settings.yml'`,
+    },
+    {
+      from: '../config/schema/emulsify.schema.yml',
+      to: `../config/schema/${machineName}.schema.yml`,
+    },
   ]);
 
   // Update info.yml file.

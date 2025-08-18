@@ -1,11 +1,29 @@
-module.exports = {
-  tagFormat: '${version}',
+export default {
   branches: ['main'],
-  repositoryUrl: 'git@github.com:emulsify-ds/emulsify-drupal-starter.git',
+  repositoryUrl: 'git@github.com:emulsify-ds/emulsify-starter.git',
   plugins: [
-    '@semantic-release/commit-analyzer',
-    '@semantic-release/release-notes-generator',
+    [
+      '@semantic-release/commit-analyzer',
+      {
+        preset: 'angular',
+        parserOpts: {
+          noteKeywords: ['BREAKING CHANGE', 'BREAKING CHANGES', 'BREAKING']
+        }
+      }
+    ],
+    [
+      '@semantic-release/release-notes-generator',
+      {
+        preset: 'angular',
+        parserOpts: {
+          noteKeywords: ['BREAKING CHANGE', 'BREAKING CHANGES', 'BREAKING']
+        },
+        writerOpts: {
+          commitsSort: ['subject', 'scope']
+        }
+      }
+    ],
     ['@semantic-release/npm', { npmPublish: false }],
-    '@semantic-release/github',
-  ],
+    '@semantic-release/github'
+  ]
 };

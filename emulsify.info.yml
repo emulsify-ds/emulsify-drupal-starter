@@ -2,7 +2,7 @@ type: theme
 base theme: emulsify
 core_version_requirement: '^10 || ^11'
 
-name: emulsify
+name: whisk
 description: A subtheme build upon the Emulsify Design System.
 package: 'Emulsify'
 screenshot: screenshot.png
@@ -14,7 +14,7 @@ dependencies:
   - 'drupal:emulsify_tools (^4.0)'
 
 libraries:
-  - emulsify/base
+  - whisk/global
 
 regions:
   header: Header
@@ -25,11 +25,16 @@ regions:
 
 logo: assets/images/logo.svg
 
-components:
-  namespaces:
-    base: components/00-base
-    atoms: components/01-atoms
-    molecules: components/02-molecules
-    organisms: components/03-organisms
-    templates: components/04-templates
-    pages: components/05-pages
+# Uncomment the namespaces below that best fit your project.
+# components:
+#   namespaces:
+#     base: components/00-base
+#     atoms: components/01-atoms
+#     molecules: components/02-molecules
+#     organisms: components/03-organisms
+#     templates: components/04-templates
+#     pages: components/05-pages
+#     components: src/components
+#     foundation: src/foundation
+#     layout: src/layout
+#     tokens: src/tokens
