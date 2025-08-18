@@ -1,6 +1,6 @@
 export default {
   branches: ['main'],
-  repositoryUrl: 'git@github.com:emulsify-ds/emulsify-starter.git',
+  repositoryUrl: 'git@github.com:emulsify-ds/emulsify-drupal-starter.git',
   plugins: [
     [
       '@semantic-release/commit-analyzer',
