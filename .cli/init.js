@@ -1,8 +1,13 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
+import fs from 'fs';
+import path from 'path';
+import yaml from 'js-yaml';
+import { fileURLToPath } from 'url';
+
+// Recreate CommonJS-style globals for ESM context.
+const _filename = fileURLToPath(import.meta.url);
+const _dirname = path.dirname(_filename);
 
 /**
  * Returns a boolean indicating whether or not the given object is a literal object.
@@ -20,7 +25,8 @@ const isObjectLiteral = (obj) =>
  */
 const getEmulsifyConfig = () => {
   try {
-    return require('../project.emulsify.json');
+    const configPath = path.join(_dirname, '../project.emulsify.json');
+    return JSON.parse(fs.readFileSync(configPath, 'utf8'));
   } catch (e) {
     throw new Error(
       `Unable to load an Emulsify project config file (project.emulsify.json): ${String(
@@ -76,7 +82,7 @@ const validateEmulsifyConfig = (config) => {
  */
 const renameFiles = (files) =>
   files.map(({ from, to }) =>
-    fs.renameSync(path.join(__dirname, from), path.join(__dirname, to)),
+    fs.renameSync(path.join(_dirname, from), path.join(_dirname, to)),
   );
 
 /**
@@ -152,7 +158,7 @@ const main = () => {
 
   // Update info.yml file.
   applyToYmlFile(
-    path.join(__dirname, `../${machineName}.info.yml`),
+    path.join(_dirname, `../${machineName}.info.yml`),
     (info) => ({
       ...info,
       name: machineName,
@@ -162,7 +168,7 @@ const main = () => {
 
   // Update breakpoint.yml file.
   applyToYmlFile(
-    path.join(__dirname, `../${machineName}.breakpoints.yml`),
+    path.join(_dirname, `../${machineName}.breakpoints.yml`),
     (breakpoints) => {
       const newBps = {};
       for (const prop of Object.keys(breakpoints)) {
