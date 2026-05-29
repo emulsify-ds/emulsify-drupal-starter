@@ -2,7 +2,8 @@
   "project": {
     "platform": "drupal",
     "name": "emulsify",
-    "machineName": "emulsify"
+    "machineName": "emulsify",
+    "singleDirectoryComponents": true
   },
   "starter": {
     "repository": "https://github.com/emulsify-ds/emulsify-drupal-starter.git"
