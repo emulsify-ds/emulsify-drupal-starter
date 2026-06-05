@@ -116,67 +116,6 @@ const applyToYmlFile = (filePath, functor) => {
   fs.writeFileSync(filePath, yaml.dump(functor(file)));
 };
 
-/**
- * Loads a JSON file, applies the functor to its parsed contents, and writes it.
- *
- * @param {string} filePath path to the JSON file.
- * @param {fn} functor fn that should return the new JSON object.
- * @returns void.
- */
-const applyToJsonFile = (filePath, functor) => {
-  if (!filePath || typeof filePath !== `string`) {
-    throw new Error(
-      `Cannot modify a file without knowing how to access it: ${filePath}`,
-    );
-  }
-  if (typeof functor !== 'function') {
-    return;
-  }
-
-  const file = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  fs.writeFileSync(filePath, `${JSON.stringify(functor(file), null, 2)}\n`);
-};
-
-/**
- * Updates the generated theme settings schema key after the schema file is
- * renamed from the template machine name to the project machine name.
- *
- * @param {string} filePath path to the schema yml file.
- * @param {string} machineName generated theme machine name.
- * @returns void.
- */
-const updateSchemaFile = (filePath, machineName) => {
-  applyToYmlFile(filePath, (schema) => {
-    const templateKey = 'emulsify.settings';
-    const generatedKey = `${machineName}.settings`;
-
-    if (!schema[templateKey]) {
-      return schema;
-    }
-
-    if (templateKey === generatedKey) {
-      return {
-        ...schema,
-        [templateKey]: {
-          ...schema[templateKey],
-          label: `${machineName} settings`,
-        },
-      };
-    }
-
-    const updatedSchema = {
-      ...schema,
-      [generatedKey]: {
-        ...schema[templateKey],
-        label: `${machineName} settings`,
-      },
-    };
-    delete updatedSchema[templateKey];
-
-    return updatedSchema;
-  });
-};
-
 const main = () => {
   // Load up config file, throw if none exists.
   const config = getEmulsifyConfig();
@@ -209,7 +148,7 @@ const main = () => {
     },
     {
       from: '../config/install/emulsify.settings.yml',
-      to: `../config/install/${machineName}.settings.yml`,
+      to: `../config/install/${machineName}.settings.yml'`,
     },
     {
       from: '../config/schema/emulsify.schema.yml',
@@ -222,20 +161,10 @@ const main = () => {
     path.join(_dirname, `../${machineName}.info.yml`),
     (info) => ({
       ...info,
-      name,
+      name: machineName,
       libraries: info.libraries.map(strReplaceEmulsify(machineName)),
     }),
   );
-
-  updateSchemaFile(
-    path.join(_dirname, `../config/schema/${machineName}.schema.yml`),
-    machineName,
-  );
-
-  applyToJsonFile(path.join(_dirname, '../package.json'), (packageJson) => ({
-    ...packageJson,
-    name: machineName,
-  }));
 
   // Update breakpoint.yml file.
   applyToYmlFile(

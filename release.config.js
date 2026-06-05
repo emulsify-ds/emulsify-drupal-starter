@@ -6,16 +6,6 @@ export default {
       '@semantic-release/commit-analyzer',
       {
         preset: 'angular',
-        releaseRules: [
-          {
-            subject: 'initial sync with newly built whisk starter*',
-            release: 'major'
-          },
-          {
-            subject: 'sync starter with Emulsify Core 4 Whisk baseline*',
-            release: 'major'
-          }
-        ],
         parserOpts: {
           noteKeywords: ['BREAKING CHANGE', 'BREAKING CHANGES', 'BREAKING']
         }
