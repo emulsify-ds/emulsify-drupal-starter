@@ -2,17 +2,32 @@
 
 # Emulsify Drupal Starter
 
-**Emulsify Drupal Starter** is a scaffolding repository for the Emulsify CLI. It creates an installable Drupal theme.
+**Emulsify Drupal Starter** is the Drupal theme scaffold installed by the Emulsify CLI. It lets teams create an installable Emulsify child theme in a separate Git repository and build the theme outside of a Drupal installation.
+
+This starter is aligned with the current Whisk starter from the Emulsify Drupal base theme. Generated themes target Drupal `^11.3 || ^12`, use Emulsify Core 4, and run Storybook plus theme asset builds through Vite.
 
 ## Documentation
 
 [Emulsify CLI Usage](https://www.emulsify.info/docs/supporting-projects/emulsify-cli/emulsify-cli-usage)
 
+## Requirements
+
+- Node.js `>=24`
+- Drupal `^11.3 || ^12`
+- [Emulsify Drupal base theme](https://www.drupal.org/project/emulsify)
+- `drupal/emulsify_tools:^2.0`
+
 ### Installation
 
 `emulsify init --platform drupal <name>`
 
-**Note:** Installing a customized Emulsify Drupal theme requires the [Emulsify base theme](https://www.drupal.org/project/emulsify). 
+The generated theme is configured as a child theme of the Emulsify Drupal base theme and includes the matching favicon settings schema, Storybook configuration, and Vite-based build scripts.
+
+### Local Development
+
+- `npm run build` builds the theme assets with Vite.
+- `npm run develop` runs Vite in watch mode alongside Storybook.
+- `npm run storybook-build` builds static Storybook output.
 
 
 ## Demo
