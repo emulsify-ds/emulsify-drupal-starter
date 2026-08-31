@@ -2,7 +2,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import yaml from 'js-yaml';
+import { dump as dumpYaml, load as loadYaml } from 'js-yaml';
 import { fileURLToPath } from 'url';
 
 // Recreate CommonJS-style globals for ESM context.
@@ -112,8 +112,8 @@ const applyToYmlFile = (filePath, functor) => {
     return;
   }
 
-  const file = yaml.load(fs.readFileSync(filePath, 'utf8'));
-  fs.writeFileSync(filePath, yaml.dump(functor(file)));
+  const file = loadYaml(fs.readFileSync(filePath, 'utf8'));
+  fs.writeFileSync(filePath, dumpYaml(functor(file)));
 };
 
 /**
